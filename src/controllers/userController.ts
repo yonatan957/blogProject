@@ -5,7 +5,7 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const newUser = new User(req.body)
         const user = await newUser.save()
-        res.status(201).send()
+        res.status(201).json(user)
     } catch (error) {
         res.status(400).json(error)
     }
@@ -13,7 +13,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        const users = await User.find()
+        const users = await User.find().populate('posts');
         res.status(200).json(users)
     } catch (error) {
         res.status(400).json(error)
@@ -22,7 +22,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findOne({username:req.params.username}).populate('posts');
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json(error)
