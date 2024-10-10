@@ -16,5 +16,12 @@ export interface IPost extends Document {
 
 const CommentSchema = new Schema<IComment>({});
 
+const PostSchema = new Schema<IPost>({
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  comments: [CommentSchema],
+});
+
 
 export default mongoose.model<IPost>("Post", PostSchema);
