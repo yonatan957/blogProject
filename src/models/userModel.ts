@@ -18,6 +18,8 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: [true, "Please provide a username"],
     unique: true,
+    minlength:2,
+    maxlength:50
   },
   email: {
     type: String,
@@ -28,7 +30,13 @@ const UserSchema = new Schema<IUser>({
   },
   profile: {
     bio: String,
-    socialLinks: [String],
+    socialLinks: [{
+      type:String,
+      validate:{
+        validator:validator.isURL,
+        message:'invalid URL'
+      }
+    }],
   },
   posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 });

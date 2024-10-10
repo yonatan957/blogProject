@@ -14,11 +14,15 @@ export interface IPost extends Document {
   comments: IComment[];
 }
 
-const CommentSchema = new Schema<IComment>({});
+const CommentSchema = new Schema<IComment>({
+  content: { type: String, required: true ,minlength: 2, maxlength: 200},
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  createdAt: { type: Date, default: Date.now }
+});
 
 const PostSchema = new Schema<IPost>({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
+  title: { type: String, required: true, minlength: 2, maxlength: 100 },
+  content: { type: String, required: true, minlength: 2 },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   comments: [CommentSchema],
 });
