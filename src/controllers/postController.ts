@@ -7,14 +7,19 @@ export const createPost = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {};
+): Promise<void> => {
+  const newPost = new Post(req.body);
+  await newPost.save()
+  res.status(201).json({ success: true, data: newPost });
+};
 
 // Delete a post
 export const deletePost = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {};
+): Promise<void> => { 
+};
 
 
 
